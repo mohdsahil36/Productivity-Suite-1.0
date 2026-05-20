@@ -27,7 +27,7 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
 
   return (
     <div
-      className="grid gap-0.5 mt-3"
+      className="grid flex-1 content-center gap-0.5 mt-2"
       style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
       role="grid"
       aria-label="Monthly calendar"
@@ -37,7 +37,7 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
         <div
           key={i}
           role="columnheader"
-          className="text-[9px] font-medium text-center text-[var(--db-text-tertiary)] tracking-[0.05em] uppercase pb-1.5"
+          className="text-[9px] font-medium text-center text-[var(--db-text-tertiary)] tracking-[0.05em] uppercase pb-1"
         >
           {n}
         </div>
@@ -61,7 +61,7 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
             aria-label={`${day}${hasEvent ? ", event" : ""}${isToday ? ", today" : ""}`}
             aria-current={isToday ? "date" : undefined}
             className={[
-              "relative aspect-square flex items-center justify-center font-mono-db text-[11px] rounded-md cursor-pointer transition-colors duration-100",
+              "relative flex h-6 items-center justify-center font-mono-db text-[11px] leading-none rounded-md cursor-pointer transition-colors duration-100",
               isToday
                 ? "bg-[var(--db-green-primary)] text-white dark:text-black font-medium"
                 : "text-[var(--db-text-secondary)] hover:bg-[var(--db-bg-surface-3)]",

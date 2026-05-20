@@ -17,7 +17,7 @@ const SprintProgress: FC<SprintProgressProps> = ({
   const daysLeft = totalDays - currentDay;
 
   return (
-    <div className="mt-3.5">
+    <div className="mt-2.5">
       <div className="flex justify-between items-center mb-1.5">
         <span className="text-[10px] font-medium tracking-[0.07em] uppercase text-[var(--db-text-tertiary)]">
           Sprint progress

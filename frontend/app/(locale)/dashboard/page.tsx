@@ -56,11 +56,11 @@ const TAG_CLASSES: Record<string, string> = {
 };
 
 const CELL =
-  "bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-lg p-4 overflow-hidden transition-colors duration-200 hover:border-[var(--db-border-mid)]";
+  "h-full min-h-0 bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-lg p-4 overflow-hidden transition-colors duration-200 hover:border-[var(--db-border-mid)]";
 const CELL_TITLE =
   "text-[13px] font-semibold tracking-[-0.01em] text-[var(--db-text-primary)] m-0";
 const CELL_SUB = "text-[11px] text-[var(--db-text-tertiary)] mt-0.5";
-const CELL_HDR = "flex items-start justify-between mb-3.5";
+const CELL_HDR = "flex items-start justify-between mb-2.5";
 const LABEL_XS =
   "text-[10px] font-medium tracking-[0.07em] uppercase text-[var(--db-text-tertiary)]";
 const MONO_XS = "font-mono-db text-[11px]";
@@ -102,11 +102,18 @@ export default function DashboardPage() {
     year: "numeric",
   });
   const calMonth = useMemo(() => new Date(), []);
+  const averageVelocity = Math.round(
+    VELOCITY_DATA.reduce((sum, item) => sum + item.tasks, 0) /
+      VELOCITY_DATA.length,
+  );
+  const peakVelocity = VELOCITY_DATA.reduce((peak, item) =>
+    item.tasks > peak.tasks ? item : peak,
+  );
 
   return (
-    <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)] min-h-screen">
+    <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)]">
       <div className="bento-grid w-full max-w-[1440px] mx-auto">
-        <header className={`${CELL} area-hdr !py-3`}>
+        <header className={`${CELL} area-hdr !py-2.5`}>
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[var(--db-green-primary)] flex-shrink-0" />
@@ -128,7 +135,10 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <section className={`${CELL} area-chrt`} aria-label="Workflow activity">
+        <section
+          className={`${CELL} area-chrt flex flex-col`}
+          aria-label="Workflow activity"
+        >
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>Workflow Activity</h2>
@@ -139,7 +149,7 @@ export default function DashboardPage() {
             </span>
           </div>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2">
             <WorkflowBar
               label="Done"
               value={doneTasks}
@@ -160,11 +170,11 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="mt-5 pt-4 border-t border-[var(--db-border-default)]">
+          <div className="mt-3 pt-3 border-t border-[var(--db-border-default)]">
             <span className={`${LABEL_XS} block mb-2`}>
               Daily velocity · last 7 days
             </span>
-            <div className="h-20">
+            <div className="h-24">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
                   data={VELOCITY_DATA}
@@ -219,6 +229,34 @@ export default function DashboardPage() {
               </ResponsiveContainer>
             </div>
           </div>
+
+          <div className="mt-auto grid grid-cols-3 gap-2 pt-3">
+            {[
+              { label: "Avg / day", value: averageVelocity },
+              { label: "Peak day", value: peakVelocity.day },
+              {
+                label: "Momentum",
+                value:
+                  VELOCITY_DATA.at(-1)?.tasks &&
+                  VELOCITY_DATA.at(-2)?.tasks &&
+                  VELOCITY_DATA.at(-1)!.tasks >= VELOCITY_DATA.at(-2)!.tasks
+                    ? "Up"
+                    : "Dip",
+              },
+            ].map(({ label, value }) => (
+              <div
+                key={label}
+                className="rounded-md border border-[var(--db-border-default)] bg-[var(--db-bg-surface-2)] px-3 py-2"
+              >
+                <div className="font-mono-db text-base font-medium leading-none text-[var(--db-text-primary)]">
+                  {value}
+                </div>
+                <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.07em] text-[var(--db-text-tertiary)]">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className={`${CELL} area-foc`} aria-label="Focus session">
@@ -242,7 +280,10 @@ export default function DashboardPage() {
             </span>
           </div>
 
-          <div role="list" className="flex-1 space-y-2">
+          <div
+            role="list"
+            className="min-h-0 flex-1 space-y-1 overflow-auto pr-1"
+          >
             {activeTasks.map((t) => (
               <TaskRow
                 key={t._id}
@@ -263,14 +304,17 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          <div className="pt-4">
-            <Button className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2.5 text-xs font-semibold tracking-[0.01em] transition-all duration-150">
+          <div className="pt-2">
+            <Button className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2 text-xs font-semibold tracking-[0.01em] transition-all duration-150">
               Add New Task
             </Button>
           </div>
         </section>
 
-        <section className={`${CELL} area-cal`} aria-label="Calendar">
+        <section
+          className={`${CELL} area-cal flex flex-col !p-3`}
+          aria-label="Calendar"
+        >
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>
@@ -299,11 +343,21 @@ export default function DashboardPage() {
           <MiniCalendar month={calMonth} eventDays={CALENDAR_EVENT_DAYS} />
         </section>
 
-        <section className={`${CELL} area-ins`} aria-label="Insights">
-          <h2 className={CELL_TITLE}>Insights</h2>
-          <p className={CELL_SUB}>Workflow health</p>
+        <section
+          className={`${CELL} area-ins flex flex-col`}
+          aria-label="Insights"
+        >
+          <div className={CELL_HDR}>
+            <div>
+              <h2 className={CELL_TITLE}>Insights</h2>
+              <p className={CELL_SUB}>Workflow health</p>
+            </div>
+            <span className="text-[11px] font-medium bg-[var(--db-green-soft)] text-[var(--db-text-primary)] border border-[var(--db-green-mid)] rounded px-2 py-0.5">
+              Stable
+            </span>
+          </div>
 
-          <div className="grid grid-cols-2 gap-2 mt-3.5">
+          <div className="grid flex-1 grid-cols-2 gap-2">
             {[
               { num: doneTasks, desc: "Completed", accent: true },
               { num: inProgressTasks, desc: "In Progress", accent: false },
@@ -336,7 +390,7 @@ export default function DashboardPage() {
           <SprintProgress done={doneTasks} total={totalTasks} />
         </section>
 
-        <section className={`${CELL} area-nts`} aria-label="Quick notes">
+        <section className={`${CELL} area-nts flex flex-col`} aria-label="Quick notes">
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>Quick Notes</h2>
@@ -345,7 +399,7 @@ export default function DashboardPage() {
             <span className={LABEL_XS}>Ctrl+S to save</span>
           </div>
           <textarea
-            className="w-full mt-3 resize-y bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] focus:border-[var(--db-border-strong)] outline-none rounded-md px-3 py-2.5 font-ui-db text-xs text-[var(--db-text-primary)] placeholder:text-[var(--db-text-tertiary)] leading-relaxed min-h-[80px] transition-colors duration-150"
+            className="w-full mt-2 min-h-0 flex-1 resize-none bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] focus:border-[var(--db-border-strong)] outline-none rounded-md px-3 py-2 font-ui-db text-xs text-[var(--db-text-primary)] placeholder:text-[var(--db-text-tertiary)] leading-relaxed transition-colors duration-150"
             defaultValue="Auth refactor: consider moving token refresh to middleware layer.&#10;&#10;Dashboard perf: lazy-load chart component, defer calendar hydration until visible."
             aria-label="Quick notes"
           />
@@ -377,7 +431,7 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className={`${CELL} area-upc`} aria-label="Upcoming events">
+        <section className={`${CELL} area-upc flex flex-col`} aria-label="Upcoming events">
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>Upcoming</h2>
@@ -388,11 +442,11 @@ export default function DashboardPage() {
             </span>
           </div>
 
-          <ul className="flex flex-col gap-2" role="list">
+          <ul className="min-h-0 flex-1 overflow-auto pr-1 flex flex-col gap-1.5" role="list">
             {UPCOMING_EVENTS.map((ev) => (
               <li
                 key={ev.time}
-                className="flex items-center gap-2.5 bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-md px-3 py-2.5 transition-colors duration-150"
+                className="flex items-center gap-2.5 bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-md px-3 py-2 transition-colors duration-150"
               >
                 <span className="font-mono-db text-[11px] text-[var(--db-text-tertiary)] min-w-[36px] whitespace-nowrap">
                   {ev.time}
@@ -415,7 +469,7 @@ export default function DashboardPage() {
           </ul>
 
           <div
-            className="mt-3 flex items-center justify-between gap-2 bg-[var(--db-green-soft)] border border-[var(--db-green-mid)] rounded-md px-3 py-2.5"
+            className="mt-2 flex items-center justify-between gap-2 bg-[var(--db-green-soft)] border border-[var(--db-green-mid)] rounded-md px-3 py-2"
             role="note"
           >
             <span className="text-[11px] font-semibold text-[var(--db-text-primary)] whitespace-nowrap">

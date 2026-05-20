@@ -29,7 +29,7 @@ const TaskRow: FC<TaskRowProps> = ({
   const isInProgress = status === "In Progress";
 
   return (
-    <div className="flex items-center gap-2.5 py-2.5 border-b border-[var(--db-border-default)] last:border-b-0 last:pb-0">
+    <div className="flex items-center gap-2.5 py-1.5 border-b border-[var(--db-border-default)] last:border-b-0 last:pb-0">
       <span
         aria-label={isDone ? "Mark as to do" : "Mark as done"}
         onClick={onToggleTask}

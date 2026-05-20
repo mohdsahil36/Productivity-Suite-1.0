@@ -9,7 +9,7 @@ interface KpiPillProps {
 const KpiPill: FC<KpiPillProps> = ({ label, value, accent = false }) => (
   <div
     className={[
-      "flex flex-col items-end rounded-md border px-3 py-1.5 cursor-default transition-colors duration-150",
+      "flex flex-col items-end rounded-md border px-2.5 py-1 cursor-default transition-colors duration-150",
       accent
         ? "bg-[var(--db-green-soft)] border-[var(--db-green-mid)]"
         : "bg-[var(--db-bg-surface-2)] border-[var(--db-border-default)] hover:border-[var(--db-border-mid)]",
