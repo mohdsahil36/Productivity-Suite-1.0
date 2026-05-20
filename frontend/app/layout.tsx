@@ -52,11 +52,11 @@ export default function RootLayout({
           antialiased
         `}
         >
-          <main className="w-full min-h-screen app-theme">
+          <main className="w-full min-h-screen app-theme bg-[var(--bg-main)] text-[var(--text-primary)]">
             <Navbar />
 
-            <div className="border-t-2 border-[#231f1a]/70 bg-transparent">
-              <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
+            <div className="border-t border-[var(--border-default)] bg-transparent">
+              <div className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 sm:py-5">
                 {children}
               </div>
             </div>

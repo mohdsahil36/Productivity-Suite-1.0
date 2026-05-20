@@ -77,7 +77,7 @@ export default function Pomodoro() {
   return (
     <div className="flex min-h-[20rem] items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-2xl p-6 shadow-sm space-y-5">
+        <div className="bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-lg p-6 space-y-5">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
@@ -93,7 +93,7 @@ export default function Pomodoro() {
               className={[
                 "text-[9px] font-medium tracking-[0.07em] uppercase px-2.5 py-1 rounded-full border transition-colors duration-200",
                 isRunning
-                  ? "bg-[var(--db-green-soft)] text-[var(--db-green-active)] border-[var(--db-green-mid)]"
+                  ? "bg-[var(--db-green-soft)] text-[var(--db-text-primary)] border-[var(--db-green-mid)]"
                   : "bg-[var(--db-bg-surface-2)] text-[var(--db-text-tertiary)] border-[var(--db-border-default)]",
               ].join(" ")}
             >
@@ -122,7 +122,7 @@ export default function Pomodoro() {
                       w-14 text-center text-sm font-medium font-mono
                       bg-[var(--db-bg-surface-2)]
                       border border-[var(--db-border-default)]
-                      rounded-xl px-2 py-1.5
+                      rounded-md px-2 py-1.5
                       text-[var(--db-text-primary)]
                       focus:outline-none focus:border-[var(--db-green-primary)] focus:ring-1 focus:ring-[var(--db-green-primary)]
                       disabled:opacity-40 disabled:cursor-not-allowed
@@ -187,8 +187,9 @@ export default function Pomodoro() {
             <button
               onClick={() => startPomodoro(convertedTime())}
               className="
-                px-5 py-2 text-xs font-semibold rounded-xl
+                px-5 py-2 text-xs font-semibold rounded-md
                 bg-[var(--db-green-primary)] text-white
+                dark:text-black
                 hover:bg-[var(--db-green-hover)]
                 active:scale-[0.98]
                 transition-all duration-150 cursor-pointer
@@ -200,7 +201,7 @@ export default function Pomodoro() {
             <button
               onClick={pause}
               className="
-                px-5 py-2 text-xs font-semibold rounded-xl
+                px-5 py-2 text-xs font-semibold rounded-md
                 bg-[var(--db-bg-surface-2)] text-[var(--db-text-primary)]
                 border border-[var(--db-border-default)]
                 hover:border-[var(--db-border-mid)]
@@ -217,7 +218,7 @@ export default function Pomodoro() {
                 setConfig(structuredClone(timeConfig));
               }}
               className="
-                px-5 py-2 text-xs font-semibold rounded-xl
+                px-5 py-2 text-xs font-semibold rounded-md
                 bg-[var(--db-bg-surface-2)] text-[var(--db-text-primary)]
                 border border-[var(--db-border-default)]
                 hover:border-[var(--db-border-mid)]

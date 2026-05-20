@@ -81,14 +81,14 @@ function DraggableTask({
     <div
       ref={setNodeRef}
       style={style}
-      className="p-3 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md shadow-sm"
+      className="p-3 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg"
     >
       {/* Priority strip */}
       <div
         className={`h-[3px] mb-2 rounded
-          ${task.priority === "low" && "bg-green-400"}
-          ${task.priority === "medium" && "bg-yellow-400"}
-          ${task.priority === "high" && "bg-red-400"}
+          ${task.priority === "low" && "bg-[var(--text-tertiary)]"}
+          ${task.priority === "medium" && "bg-[var(--db-amber)]"}
+          ${task.priority === "high" && "bg-[var(--db-red)]"}
         `}
       />
 
@@ -98,7 +98,7 @@ function DraggableTask({
         {...attributes}
         className="flex items-center gap-2 cursor-grab mb-2"
       >
-        <GripVertical className="size-4 text-gray-400" />
+        <GripVertical className="size-4 text-[var(--text-tertiary)]" />
         <span className="text-sm font-medium text-[var(--text-primary)]">
           {task.title}
         </span>
@@ -111,13 +111,13 @@ function DraggableTask({
 
         <div className="flex gap-2">
           <button onClick={() => editHandler(task._id)}>
-            <Edit className="size-4 text-gray-500 hover:text-black transition" />
+            <Edit className="size-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition" />
           </button>
           <DeleteConfirmation taskId={task._id} onTaskDelete={onTaskDelete} />
         </div>
       </div>
 
-      <div className="flex justify-between mt-2 text-[10px] text-gray-400">
+      <div className="flex justify-between mt-2 text-[10px] text-[var(--text-tertiary)]">
         <p>{task.priority}</p>
         <p>{new Date(task.due_date).toLocaleDateString()}</p>
       </div>
@@ -212,10 +212,14 @@ export default function KanbanBoard() {
   );
 
   return (
-    <div className="px-4 py-6 bg-[var(--bg-main)] space-y-5">
-      {/* Header */}
-      <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md p-4 shadow-sm">
-        <h1 className="text-base font-semibold">Kanban Workspace</h1>
+    <div className="bg-[var(--bg-main)] space-y-4">
+      <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg p-4">
+        <h1 className="text-base font-semibold tracking-[-0.01em] text-[var(--text-primary)]">
+          Kanban Workspace
+        </h1>
+        <p className="mt-1 text-xs text-[var(--text-secondary)]">
+          Drag tasks between focused, simple columns.
+        </p>
       </div>
 
       <DndContext onDragEnd={handleDragEvent} sensors={sensors}>
@@ -224,7 +228,7 @@ export default function KanbanBoard() {
             <DroppableColumn
               key={idx}
               id={item.status}
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md p-4 shadow-sm"
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg p-4"
             >
               <h2 className="text-xs font-medium text-[var(--text-secondary)] mb-3">
                 {item.status} ({item.tasks.length})
@@ -244,14 +248,14 @@ export default function KanbanBoard() {
                     />
                   ))
                 ) : (
-                  <p className="text-xs text-gray-400">No tasks</p>
+                  <p className="text-xs text-[var(--text-tertiary)]">No tasks</p>
                 )}
               </div>
 
               <button
                 className="
                   mt-4 w-full text-xs font-medium
-                  bg-[var(--green-primary)] text-white py-2 rounded-md
+                  bg-[var(--green-primary)] text-white dark:text-black py-2 rounded-md
                   hover:bg-[var(--green-hover)]
                   active:bg-[var(--green-active)]
                   transition

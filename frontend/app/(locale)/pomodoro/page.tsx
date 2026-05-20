@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function PomodoroPage() {
   return (
-    <div className="min-h-[30rem] bg-[var(--bg-main)] px-4 py-6">
+    <div className="min-h-[30rem] bg-[var(--bg-main)]">
       <div className="max-w-2xl mx-auto space-y-5">
         {/* Tabs */}
         <Tabs defaultValue="pomodoro" className="w-full">
@@ -20,9 +20,9 @@ export default function PomodoroPage() {
                   px-3 py-1.5 text-xs font-medium rounded-md transition
                   text-[var(--text-secondary)]
                   hover:text-[var(--text-primary)]
-                  hover:bg-gray-100
+                  hover:bg-[var(--bg-surface)]
                   data-[state=active]:bg-[var(--green-soft)]
-                  data-[state=active]:text-[var(--green-active)]
+                  data-[state=active]:text-[var(--text-primary)]
                 "
               >
                 {tab}
@@ -33,7 +33,7 @@ export default function PomodoroPage() {
           {/* Pomodoro */}
           <TabsContent value="pomodoro">
             <div
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md p-4 shadow-sm mt-4 space-y-4
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg p-4 mt-4 space-y-4
 "
             >
               <div>
@@ -51,7 +51,7 @@ export default function PomodoroPage() {
 
           {/* Stopwatch */}
           <TabsContent value="stopwatch">
-            <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md p-4 shadow-sm mt-4 space-y-4">
+            <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg p-4 mt-4 space-y-4">
               <div>
                 <h2 className="text-sm font-medium text-[var(--text-primary)]">
                   Stopwatch

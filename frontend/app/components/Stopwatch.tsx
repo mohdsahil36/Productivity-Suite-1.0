@@ -53,7 +53,7 @@ export default function StopWatch() {
   return (
     <div className="mx-auto max-w-md space-y-5 text-[var(--text-primary)]">
       {/* Timer Display */}
-      <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-md p-4 shadow-sm">
+      <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-lg p-4">
         <h1 className="text-center text-lg font-semibold tracking-tight">
           {formatTime()}
         </h1>
@@ -66,7 +66,7 @@ export default function StopWatch() {
           onClick={startStopwatch}
           className="
             px-4 py-2 text-xs font-medium rounded-md
-            bg-[var(--green-primary)] text-white
+            bg-[var(--green-primary)] text-white dark:text-black
             hover:bg-[var(--green-hover)]
             active:bg-[var(--green-active)]
             transition
@@ -80,9 +80,9 @@ export default function StopWatch() {
           onClick={pause}
           className="
             px-4 py-2 text-xs font-medium rounded-md
-            bg-gray-100 text-[var(--text-primary)]
-            hover:bg-gray-200
-            active:bg-gray-300
+            bg-[var(--bg-surface-2)] text-[var(--text-primary)]
+            border border-[var(--border-default)]
+            hover:border-[var(--border-strong)]
             transition
           "
         >
@@ -94,9 +94,9 @@ export default function StopWatch() {
           onClick={reset}
           className="
             px-4 py-2 text-xs font-medium rounded-md
-            bg-gray-100 text-[var(--text-primary)]
-            hover:bg-gray-200
-            active:bg-gray-300
+            bg-[var(--bg-surface-2)] text-[var(--text-primary)]
+            border border-[var(--border-default)]
+            hover:border-[var(--border-strong)]
             transition
           "
         >

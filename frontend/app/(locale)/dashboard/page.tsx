@@ -30,11 +30,11 @@ import { Button } from "@/components/ui/button";
 const RECHARTS_TOOLTIP_STYLE: React.CSSProperties = {
   background: "var(--db-bg-surface)",
   border: "0.5px solid var(--db-border-mid)",
-  borderRadius: "8px",
+  borderRadius: "6px",
   fontSize: "11px",
   fontFamily: "var(--db-font-mono)",
   color: "var(--db-text-primary)",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+  boxShadow: "none",
 };
 const RECHARTS_LABEL_STYLE: React.CSSProperties = {
   color: "var(--db-text-tertiary)",
@@ -50,13 +50,13 @@ const RECHARTS_TICK_STYLE = {
 };
 
 const TAG_CLASSES: Record<string, string> = {
-  eng: "bg-[var(--db-green-soft)]  text-[var(--db-green-active)]",
-  design: "bg-[var(--db-blue-soft)]   text-[var(--db-blue)]",
+  eng: "bg-[var(--db-green-soft)] text-[var(--db-text-primary)]",
+  design: "bg-[var(--db-blue-soft)] text-[var(--db-blue)]",
   mgmt: "bg-[var(--db-amber-soft)]  text-[var(--db-amber)]",
 };
 
 const CELL =
-  "bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-[20px] p-[18px] overflow-hidden transition-[box-shadow,border-color] duration-200 hover:border-[var(--db-border-mid)] hover:shadow-[0_2px_16px_rgba(19,138,63,0.06)]";
+  "bg-[var(--db-bg-surface)] border border-[var(--db-border-default)] rounded-lg p-4 overflow-hidden transition-colors duration-200 hover:border-[var(--db-border-mid)]";
 const CELL_TITLE =
   "text-[13px] font-semibold tracking-[-0.01em] text-[var(--db-text-primary)] m-0";
 const CELL_SUB = "text-[11px] text-[var(--db-text-tertiary)] mt-0.5";
@@ -104,12 +104,12 @@ export default function DashboardPage() {
   const calMonth = useMemo(() => new Date(), []);
 
   return (
-    <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)] min-h-screen p-3.5">
+    <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)] min-h-screen">
       <div className="bento-grid w-full max-w-[1440px] mx-auto">
-        <header className={`${CELL} area-hdr !rounded-2xl !py-3 !px-[18px]`}>
+        <header className={`${CELL} area-hdr !py-3`}>
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-[var(--db-green-primary)] shadow-[0_0_0_3px_var(--db-green-soft)] flex-shrink-0" />
+              <div className="w-2 h-2 rounded-full bg-[var(--db-green-primary)] flex-shrink-0" />
               <div>
                 <h1 className="text-[14px] font-semibold tracking-[-0.02em] text-[var(--db-text-primary)] m-0">
                   Productivity Workspace
@@ -123,7 +123,7 @@ export default function DashboardPage() {
               <KpiPill label="Completion" value={`${completionRate}%`} accent />
               <KpiPill label="Total Tasks" value={totalTasks} />
               <KpiPill label="In Progress" value={inProgressTasks} />
-              <KpiPill label="Streak" value="7d 🔥" />
+              <KpiPill label="Streak" value="7d" />
             </div>
           </div>
         </header>
@@ -134,7 +134,7 @@ export default function DashboardPage() {
               <h2 className={CELL_TITLE}>Workflow Activity</h2>
               <p className={CELL_SUB}>Task distribution by status</p>
             </div>
-            <span className="text-[11px] font-medium bg-[var(--db-green-soft)] text-[var(--db-green-active)] border border-[var(--db-green-mid)] rounded-full px-2.5 py-0.5 whitespace-nowrap">
+            <span className="text-[11px] font-medium bg-[var(--db-green-soft)] text-[var(--db-text-primary)] border border-[var(--db-green-mid)] rounded px-2.5 py-0.5 whitespace-nowrap">
               {completionRate}% complete
             </span>
           </div>
@@ -264,7 +264,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="pt-4">
-            <Button className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.98] text-white rounded-xl py-2.5 text-xs font-semibold tracking-[0.01em] transition-all duration-150">
+            <Button className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2.5 text-xs font-semibold tracking-[0.01em] transition-all duration-150">
               Add New Task
             </Button>
           </div>
@@ -283,16 +283,16 @@ export default function DashboardPage() {
             </div>
             <div className="flex gap-1.5">
               <button
-                className="bg-transparent border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-md w-6 h-6 flex items-center justify-center text-xs text-[var(--db-text-tertiary)] transition-colors duration-150"
+                className="bg-transparent border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded w-6 h-6 flex items-center justify-center text-xs text-[var(--db-text-tertiary)] transition-colors duration-150"
                 aria-label="Previous month"
               >
-                ‹
+                {"<"}
               </button>
               <button
-                className="bg-transparent border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-md w-6 h-6 flex items-center justify-center text-xs text-[var(--db-text-tertiary)] transition-colors duration-150"
+                className="bg-transparent border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded w-6 h-6 flex items-center justify-center text-xs text-[var(--db-text-tertiary)] transition-colors duration-150"
                 aria-label="Next month"
               >
-                ›
+                {">"}
               </button>
             </div>
           </div>
@@ -313,19 +313,19 @@ export default function DashboardPage() {
               <div
                 key={desc}
                 className={[
-                  "rounded-xl border p-3",
+                  "rounded-md border p-3",
                   accent
                     ? "bg-[var(--db-green-soft)] border-[var(--db-green-mid)]"
                     : "bg-[var(--db-bg-surface-2)] border-[var(--db-border-default)]",
                 ].join(" ")}
               >
                 <div
-                  className={`font-mono-db text-xl font-medium leading-none ${accent ? "text-[var(--db-green-active)]" : "text-[var(--db-text-primary)]"}`}
+                  className={`font-mono-db text-xl font-medium leading-none ${accent ? "text-[var(--db-text-primary)]" : "text-[var(--db-text-primary)]"}`}
                 >
                   {num}
                 </div>
                 <div
-                  className={`text-[11px] mt-1 ${accent ? "text-[var(--db-green-primary)]" : "text-[var(--db-text-tertiary)]"}`}
+                  className={`text-[11px] mt-1 ${accent ? "text-[var(--db-text-secondary)]" : "text-[var(--db-text-tertiary)]"}`}
                 >
                   {desc}
                 </div>
@@ -345,8 +345,8 @@ export default function DashboardPage() {
             <span className={LABEL_XS}>Ctrl+S to save</span>
           </div>
           <textarea
-            className="w-full mt-3 resize-y bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] focus:border-[var(--db-border-strong)] outline-none rounded-xl px-3 py-2.5 font-ui-db text-xs text-[var(--db-text-primary)] placeholder:text-[var(--db-text-tertiary)] leading-relaxed min-h-[80px] transition-colors duration-150"
-            defaultValue="Auth refactor: consider moving token refresh to middleware layer — avoids duplicating logic across routes.&#10;&#10;Dashboard perf: lazy-load chart component, defer calendar hydration until visible."
+            className="w-full mt-3 resize-y bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] focus:border-[var(--db-border-strong)] outline-none rounded-md px-3 py-2.5 font-ui-db text-xs text-[var(--db-text-primary)] placeholder:text-[var(--db-text-tertiary)] leading-relaxed min-h-[80px] transition-colors duration-150"
+            defaultValue="Auth refactor: consider moving token refresh to middleware layer.&#10;&#10;Dashboard perf: lazy-load chart component, defer calendar hydration until visible."
             aria-label="Quick notes"
           />
           <div className="flex gap-1.5 mt-2 flex-wrap items-center">
@@ -361,7 +361,7 @@ export default function DashboardPage() {
               },
               {
                 label: "shipped",
-                cls: "bg-[var(--db-green-soft)] text-[var(--db-green-active)]",
+                cls: "bg-[var(--db-green-soft)] text-[var(--db-text-primary)]",
               },
             ].map(({ label, cls }) => (
               <span
@@ -392,7 +392,7 @@ export default function DashboardPage() {
             {UPCOMING_EVENTS.map((ev) => (
               <li
                 key={ev.time}
-                className="flex items-center gap-2.5 bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-xl px-3 py-2.5 transition-colors duration-150"
+                className="flex items-center gap-2.5 bg-[var(--db-bg-surface-2)] border border-[var(--db-border-default)] hover:border-[var(--db-border-mid)] rounded-md px-3 py-2.5 transition-colors duration-150"
               >
                 <span className="font-mono-db text-[11px] text-[var(--db-text-tertiary)] min-w-[36px] whitespace-nowrap">
                   {ev.time}
@@ -415,14 +415,14 @@ export default function DashboardPage() {
           </ul>
 
           <div
-            className="mt-3 flex items-center justify-between gap-2 bg-[var(--db-green-soft)] border border-[var(--db-green-mid)] rounded-xl px-3 py-2.5"
+            className="mt-3 flex items-center justify-between gap-2 bg-[var(--db-green-soft)] border border-[var(--db-green-mid)] rounded-md px-3 py-2.5"
             role="note"
           >
-            <span className="text-[11px] font-semibold text-[var(--db-green-active)] whitespace-nowrap">
+            <span className="text-[11px] font-semibold text-[var(--db-text-primary)] whitespace-nowrap">
               AI Summary
             </span>
-            <span className="text-[11px] text-[var(--db-green-primary)]">
-              Heavy meeting day — block deep work before 10:00 →
+            <span className="text-[11px] text-[var(--db-text-secondary)]">
+              Heavy meeting day. Block deep work before 10:00.
             </span>
           </div>
         </section>
