@@ -22,12 +22,18 @@ type KanbanStore = {
   deleteTasks: (taskId: string) => Promise<Response>;
 };
 
-export const useTaskStore = create<KanbanStore>((set) => ({
-  tasks: [],
-  fetchTasks: async (route?: string) => {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-    let shouldFetch = false;
-    let fetchRoute = "";
+export const useTaskStore = create<KanbanStore>((set) => {
+  const apiBaseUrl =
+    process.env.NEXT_PUBLIC_API_URL ??
+    (process.env.NODE_ENV === "production" ? "/_/backend" : "http://localhost:8080");
+  const getUrl = (path: string) =>
+    apiBaseUrl + (path.startsWith("/") ? path : `/${path}`);
+
+  return {
+    tasks: [],
+    fetchTasks: async (route?: string) => {
+      let shouldFetch = false;
+      let fetchRoute = "";
 
     if (route) {
       shouldFetch = true;
@@ -36,7 +42,7 @@ export const useTaskStore = create<KanbanStore>((set) => ({
 
     if (shouldFetch) {
       try {
-        const response = await fetch(`${baseUrl}${fetchRoute}`);
+        const response = await fetch(getUrl(fetchRoute));
 
         if (!response.ok) {
           const body = await response.text();
@@ -64,7 +70,7 @@ export const useTaskStore = create<KanbanStore>((set) => ({
     }
   },
   editTask: async (taskId: string) => {
-    const response = await fetch(`http://localhost:8080/kanban/${taskId}`, {
+    const response = await fetch(getUrl(`kanban/${taskId}`), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -74,8 +80,8 @@ export const useTaskStore = create<KanbanStore>((set) => ({
   addOrEditTask: async (taskData: TaskFormData, isEditMode: boolean) => {
     try {
       const url = isEditMode
-        ? `http://localhost:8080/kanban/${taskData._id}`
-        : `http://localhost:8080/kanban`;
+        ? getUrl(`kanban/${taskData._id}`)
+        : getUrl("kanban");
       const method = isEditMode ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -127,7 +133,7 @@ export const useTaskStore = create<KanbanStore>((set) => ({
   updateTaskStatus: async (taskId: string, newStatus: string) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/tasks/${taskId}/status?status=${newStatus}`,
+        getUrl(`tasks/${taskId}/status?status=${newStatus}`),
         {
           method: "PUT",
           headers: {
@@ -153,7 +159,7 @@ export const useTaskStore = create<KanbanStore>((set) => ({
 
   deleteTasks: async (taskId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/kanban/${taskId}`, {
+      const response = await fetch(getUrl(`kanban/${taskId}`), {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
@@ -172,4 +178,5 @@ export const useTaskStore = create<KanbanStore>((set) => ({
       throw err;
     }
   },
-}));
+  };
+});

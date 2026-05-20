@@ -61,9 +61,9 @@ export default function FocusCell({ todoCount }: FocusCellProps) {
             onClick={() => setSelected(mins)}
             aria-pressed={selected === mins}
             className={[
-              "flex-1 py-2 rounded-xl border text-xs font-medium font-ui-db transition-colors duration-150",
+              "flex-1 py-2 rounded-md border text-xs font-medium font-ui-db transition-colors duration-150",
               selected === mins
-                ? "bg-[var(--db-green-soft)] text-[var(--db-green-active)] border-[var(--db-green-mid)]"
+                ? "bg-[var(--db-green-soft)] text-[var(--db-text-primary)] border-[var(--db-green-mid)]"
                 : "bg-[var(--db-bg-surface-3)] text-[var(--db-text-secondary)] border-[var(--db-border-default)] hover:border-[var(--db-border-mid)]",
             ].join(" ")}
           >
@@ -73,9 +73,9 @@ export default function FocusCell({ todoCount }: FocusCellProps) {
       </div>
       <Link
         href="/pomodoro"
-        className="mt-auto block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.98] text-white rounded-xl py-2.5 text-xs font-semibold tracking-[0.01em] transition-colors duration-150"
+        className="mt-auto block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2.5 text-xs font-semibold tracking-[0.01em] transition-colors duration-150"
       >
-        Move to the pomodoro page
+        Open pomodoro
       </Link>
     </div>
   );

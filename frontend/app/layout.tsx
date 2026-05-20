@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./styles/theme-provider";
 
 import Navbar from "./components/Navbar";
 
@@ -37,24 +38,31 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <body
+          className={`
           ${ibmPlexMono.className} 
           ${geist.variable} 
           ${geistMono.variable} 
           antialiased
         `}
-      >
-        <main className="w-full min-h-screen app-theme">
-          <Navbar />
+        >
+          <main className="w-full min-h-screen app-theme bg-[var(--bg-main)] text-[var(--text-primary)]">
+            <Navbar />
 
-          <div className="border-t-2 border-[#231f1a]/70 bg-transparent">
-            <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
-              {children}
+            <div className="border-t border-[var(--border-default)] bg-transparent">
+              <div className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 sm:py-5">
+                {children}
+              </div>
             </div>
-          </div>
-        </main>
-      </body>
+          </main>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

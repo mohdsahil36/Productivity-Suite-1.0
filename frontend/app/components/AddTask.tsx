@@ -41,7 +41,7 @@ const INPUT_CLASS = `
   mt-2 w-full
   bg-[var(--db-bg-surface-2)]
   border border-[var(--db-border-default)]
-  rounded-xl px-3 py-2
+  rounded-md px-3 py-2
   text-xs text-[var(--db-text-primary)]
   placeholder:text-[var(--db-text-tertiary)]
   focus:outline-none focus:border-[var(--db-green-primary)] focus:ring-1 focus:ring-[var(--db-green-primary)]
@@ -112,11 +112,11 @@ export default function AddTask(props: AddTaskProps) {
     <Dialog onOpenChange={handleDialogClose} open={props.openModal}>
       <DialogContent
         className="
-          min-w-[42rem] p-0
+          w-[min(42rem,calc(100vw-2rem))] p-0
           bg-[var(--db-bg-surface)]
           border border-[var(--db-border-default)]
-          rounded-2xl
-          shadow-[0_8px_32px_rgba(19,138,63,0.08)]
+          rounded-lg
+          shadow-none
           font-ui-db
           overflow-hidden
         "
@@ -138,7 +138,7 @@ export default function AddTask(props: AddTaskProps) {
           </div>
 
           {/* Status pill */}
-          <span className="text-[9px] font-medium tracking-[0.07em] uppercase px-2.5 py-1 rounded-sm bg-[var(--db-green-soft)] text-[var(--db-green-active)] border border-[var(--db-green-mid)] me-4">
+          <span className="text-[9px] font-medium tracking-[0.07em] uppercase px-2.5 py-1 rounded-sm bg-[var(--db-green-soft)] text-[var(--db-text-primary)] border border-[var(--db-green-mid)] me-4">
             {props.status}
           </span>
         </div>
@@ -188,7 +188,7 @@ export default function AddTask(props: AddTaskProps) {
                         mt-2 w-full
                         bg-[var(--db-bg-surface-2)]
                         border border-[var(--db-border-default)]
-                        rounded-xl px-3 py-2 h-auto
+                        rounded-md px-3 py-2 h-auto
                         text-xs text-[var(--db-text-primary)]
                         focus:outline-none focus:border-[var(--db-green-primary)] focus:ring-1 focus:ring-[var(--db-green-primary)]
                         transition-colors duration-150
@@ -200,7 +200,7 @@ export default function AddTask(props: AddTaskProps) {
                       className="
                         bg-[var(--db-bg-surface)]
                         border border-[var(--db-border-default)]
-                        rounded-xl shadow-[0_4px_16px_rgba(19,138,63,0.08)]
+                        rounded-md shadow-none
                         text-xs
                       "
                     >
@@ -208,7 +208,7 @@ export default function AddTask(props: AddTaskProps) {
                         {
                           value: "low",
                           label: "Low",
-                          cls: "text-[var(--db-green-active)]",
+                          cls: "text-[var(--db-text-primary)]",
                         },
                         {
                           value: "medium",
@@ -245,7 +245,7 @@ export default function AddTask(props: AddTaskProps) {
                           bg-[var(--db-bg-surface-2)]
                           border border-[var(--db-border-default)]
                           hover:border-[var(--db-border-mid)]
-                          rounded-xl px-3 py-2
+                          rounded-md px-3 py-2
                           text-left text-xs
                           text-[var(--db-text-primary)]
                           transition-colors duration-150
@@ -266,8 +266,8 @@ export default function AddTask(props: AddTaskProps) {
                         p-0
                         bg-[var(--db-bg-surface)]
                         border border-[var(--db-border-default)]
-                        rounded-2xl
-                        shadow-[0_4px_16px_rgba(19,138,63,0.08)]
+                        rounded-md
+                        shadow-none
                       "
                     >
                       <Calendar
@@ -289,7 +289,7 @@ export default function AddTask(props: AddTaskProps) {
                 type="button"
                 onClick={() => props.setOpenModal(false)}
                 className="
-                  px-4 py-2 text-xs font-medium rounded-xl
+                  px-4 py-2 text-xs font-medium rounded-md
                   bg-[var(--db-bg-surface-2)]
                   border border-[var(--db-border-default)]
                   text-[var(--db-text-secondary)]
@@ -306,7 +306,7 @@ export default function AddTask(props: AddTaskProps) {
                 type="button"
                 onClick={() => setFormData(initialFormData as TaskFormData)}
                 className="
-                  px-4 py-2 text-xs font-medium rounded-xl
+                  px-4 py-2 text-xs font-medium rounded-md
                   bg-[var(--db-bg-surface-2)]
                   border border-[var(--db-border-default)]
                   text-[var(--db-text-secondary)]
@@ -322,8 +322,9 @@ export default function AddTask(props: AddTaskProps) {
               <button
                 type="submit"
                 className="
-                  px-5 py-2 text-xs font-semibold rounded-xl
+                  px-5 py-2 text-xs font-semibold rounded-md
                   bg-[var(--db-green-primary)] text-white
+                  dark:text-black
                   hover:bg-[var(--db-green-hover)]
                   active:scale-[0.98]
                   transition-all duration-150

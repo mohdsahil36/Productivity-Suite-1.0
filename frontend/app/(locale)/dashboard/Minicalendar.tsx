@@ -61,9 +61,9 @@ const MiniCalendar: FC<MiniCalendarProps> = ({
             aria-label={`${day}${hasEvent ? ", event" : ""}${isToday ? ", today" : ""}`}
             aria-current={isToday ? "date" : undefined}
             className={[
-              "relative aspect-square flex items-center justify-center font-mono-db text-[11px] rounded-lg cursor-pointer transition-colors duration-100",
+              "relative aspect-square flex items-center justify-center font-mono-db text-[11px] rounded-md cursor-pointer transition-colors duration-100",
               isToday
-                ? "bg-[var(--db-green-primary)] text-white font-medium"
+                ? "bg-[var(--db-green-primary)] text-white dark:text-black font-medium"
                 : "text-[var(--db-text-secondary)] hover:bg-[var(--db-bg-surface-3)]",
             ].join(" ")}
           >

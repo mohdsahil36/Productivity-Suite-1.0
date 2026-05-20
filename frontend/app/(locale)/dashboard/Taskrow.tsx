@@ -8,9 +8,9 @@ interface TaskRowProps {
 }
 
 const PRIORITY_CLASSES: Record<TaskPriority, string> = {
-  High: "bg-[var(--db-re  d-soft)]   text-[var(--db-red)]",
+  High: "bg-[var(--db-red-soft)] text-[var(--db-red)]",
   Medium: "bg-[var(--db-amber-soft)] text-[var(--db-amber)]",
-  Low: "bg-[var(--db-green-soft)] text-[var(--db-green-active)]",
+  Low: "bg-[var(--db-green-soft)] text-[var(--db-text-primary)]",
 };
 
 const PRIORITY_LABELS: Record<TaskPriority, string> = {
@@ -75,7 +75,7 @@ const TaskRow: FC<TaskRowProps> = ({
       </span>
 
       <span
-        className={`flex-shrink-0 text-[9px] font-medium tracking-[0.06em] uppercase px-1.5 py-0.5 rounded ${PRIORITY_CLASSES[priority]}`}
+        className={`flex-shrink-0 text-[9px] font-medium tracking-[0.06em] uppercase px-1.5 py-0.5 rounded-sm ${PRIORITY_CLASSES[priority]}`}
       >
         {PRIORITY_LABELS[priority] ?? priority}
       </span>

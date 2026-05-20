@@ -22,7 +22,7 @@ const SprintProgress: FC<SprintProgressProps> = ({
         <span className="text-[10px] font-medium tracking-[0.07em] uppercase text-[var(--db-text-tertiary)]">
           Sprint progress
         </span>
-        <span className="font-mono-db text-[11px] text-[var(--db-green-primary)]">
+        <span className="font-mono-db text-[11px] text-[var(--db-text-primary)]">
           {pct}%
         </span>
       </div>
