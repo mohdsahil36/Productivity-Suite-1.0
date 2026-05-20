@@ -239,17 +239,22 @@ button {
   .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 0.82fr);
     grid-template-areas:
       "hdr  hdr  hdr  hdr  hdr  hdr  hdr  hdr  hdr  hdr  hdr  hdr"
-      "chrt chrt chrt chrt chrt chrt chrt foc  foc  foc  foc  foc"
-      "tsk  tsk  tsk  tsk  cal  cal  cal  cal  ins  ins  ins  ins"
-      "nts  nts  nts  nts  nts  nts  upc  upc  upc  upc  upc  upc";
+      "chrt chrt chrt chrt chrt chrt tsk  tsk  tsk  foc  foc  foc"
+      "cal  cal  cal  ins  ins  ins  nts  nts  nts  upc  upc  upc";
     gap: 12px;
+    align-items: stretch;
+    height: calc(100svh - 69px);
+    min-height: 0;
   }
 
   @media (max-width: 1024px) {
     .bento-grid {
       grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: none;
+      height: auto;
       grid-template-areas:
         "hdr  hdr  hdr  hdr  hdr  hdr"
         "chrt chrt chrt chrt chrt chrt"

@@ -56,7 +56,7 @@ export default function RootLayout({
             <Navbar />
 
             <div className="border-t border-[var(--border-default)] bg-transparent">
-              <div className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 sm:py-5">
+              <div className="mx-auto w-full max-w-[1500px] px-3 py-3 sm:px-4">
                 {children}
               </div>
             </div>
