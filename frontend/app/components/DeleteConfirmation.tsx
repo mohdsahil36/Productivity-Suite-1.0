@@ -23,8 +23,8 @@ export default function DeleteConfirmation(props: {
   };
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger>
-        <Trash2 className="size-4 cursor-pointer hover:text-red-400" />
+      <DialogTrigger className="rounded border border-transparent p-1 text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--db-red)]">
+        <Trash2 className="size-4 cursor-pointer" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
