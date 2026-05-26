@@ -112,13 +112,13 @@ export default function DashboardPage() {
 
   return (
     <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)]">
-      <div className="bento-grid w-full max-w-[1440px] mx-auto">
+      <div className="bento-grid w-full max-w-[90rem]">
         <header className={`${CELL} area-hdr !py-2.5`}>
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[var(--db-green-primary)] flex-shrink-0" />
               <div>
-                <h1 className="text-[14px] font-semibold tracking-[-0.02em] text-[var(--db-text-primary)] m-0">
+                <h1 className="text-[0.9rem] font-semibold tracking-[-0.02em] text-[var(--db-text-primary)] m-0">
                   Productivity Workspace
                 </h1>
                 <p className="font-mono-db text-[11px] text-[var(--db-text-tertiary)] mt-0.5">
@@ -390,7 +390,10 @@ export default function DashboardPage() {
           <SprintProgress done={doneTasks} total={totalTasks} />
         </section>
 
-        <section className={`${CELL} area-nts flex flex-col`} aria-label="Quick notes">
+        <section
+          className={`${CELL} area-nts flex flex-col`}
+          aria-label="Quick notes"
+        >
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>Quick Notes</h2>
@@ -431,7 +434,10 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className={`${CELL} area-upc flex flex-col`} aria-label="Upcoming events">
+        <section
+          className={`${CELL} area-upc flex flex-col`}
+          aria-label="Upcoming events"
+        >
           <div className={CELL_HDR}>
             <div>
               <h2 className={CELL_TITLE}>Upcoming</h2>
@@ -442,7 +448,10 @@ export default function DashboardPage() {
             </span>
           </div>
 
-          <ul className="min-h-0 flex-1 overflow-auto pr-1 flex flex-col gap-1.5" role="list">
+          <ul
+            className="min-h-0 flex-1 overflow-auto pr-1 flex flex-col gap-1.5"
+            role="list"
+          >
             {UPCOMING_EVENTS.map((ev) => (
               <li
                 key={ev.time}
