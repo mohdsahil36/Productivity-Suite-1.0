@@ -37,20 +37,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <body
-          className={`
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`
           ${ibmPlexMono.className} 
           ${geist.variable} 
           ${geistMono.variable} 
           antialiased
         `}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
           <main className="w-full min-h-screen app-theme bg-[var(--bg-main)] text-[var(--text-primary)]">
             <Navbar />
@@ -61,8 +61,8 @@ export default function RootLayout({
               </div>
             </div>
           </main>
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
