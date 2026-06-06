@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -66,11 +66,13 @@ const LABEL_XS =
 const MONO_XS = "font-mono-db text-[11px]";
 
 export default function DashboardPage() {
+  const [isMounted, setIsMounted] = useState(false);
   const rawTasks = useTaskStore((s) => s.tasks);
   const fetchTasks = useTaskStore((s) => s.fetchTasks);
   const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
 
   useEffect(() => {
+    setIsMounted(true);
     void fetchTasks("kanban");
   }, [fetchTasks]);
 
@@ -174,59 +176,69 @@ export default function DashboardPage() {
             <span className={`${LABEL_XS} block mb-2`}>
               Daily velocity · last 7 days
             </span>
-            <div className="h-24">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
-                  data={VELOCITY_DATA}
-                  margin={{ top: 4, right: 4, left: 10, bottom: 0 }}
-                >
-                  <defs>
-                    <linearGradient id="vel-grad" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="0%"
-                        stopColor="var(--db-green-primary)"
-                        stopOpacity={0.18}
-                      />
-                      <stop
-                        offset="100%"
-                        stopColor="var(--db-green-primary)"
-                        stopOpacity={0}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid
-                    strokeDasharray="2 2"
-                    vertical={false}
-                    opacity={0.5}
-                  />
-                  <XAxis
-                    dataKey="day"
-                    tickLine={false}
-                    axisLine={false}
-                    tick={RECHARTS_TICK_STYLE}
-                    interval={0}
-                  />
-                  <YAxis hide />
-                  <Tooltip
-                    contentStyle={RECHARTS_TOOLTIP_STYLE}
-                    labelStyle={RECHARTS_LABEL_STYLE}
-                    cursor={RECHARTS_CURSOR_STYLE}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="tasks"
-                    stroke="var(--db-green-primary)"
-                    strokeWidth={1.5}
-                    fill="url(#vel-grad)"
-                    dot={false}
-                    activeDot={{
-                      r: 3,
-                      fill: "var(--db-green-primary)",
-                      strokeWidth: 0,
-                    }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+            <div className="h-24 min-h-24">
+              {isMounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={VELOCITY_DATA}
+                    margin={{ top: 4, right: 4, left: 10, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient
+                        id="vel-grad"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="var(--db-green-primary)"
+                          stopOpacity={0.18}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="var(--db-green-primary)"
+                          stopOpacity={0}
+                        />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid
+                      strokeDasharray="2 2"
+                      vertical={false}
+                      opacity={0.5}
+                    />
+                    <XAxis
+                      dataKey="day"
+                      tickLine={false}
+                      axisLine={false}
+                      tick={RECHARTS_TICK_STYLE}
+                      interval={0}
+                    />
+                    <YAxis hide />
+                    <Tooltip
+                      contentStyle={RECHARTS_TOOLTIP_STYLE}
+                      labelStyle={RECHARTS_LABEL_STYLE}
+                      cursor={RECHARTS_CURSOR_STYLE}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="tasks"
+                      stroke="var(--db-green-primary)"
+                      strokeWidth={1.5}
+                      fill="url(#vel-grad)"
+                      dot={false}
+                      activeDot={{
+                        r: 3,
+                        fill: "var(--db-green-primary)",
+                        strokeWidth: 0,
+                      }}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full rounded-md bg-[var(--db-bg-surface-2)]" />
+              )}
             </div>
           </div>
 

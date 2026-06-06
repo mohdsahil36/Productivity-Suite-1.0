@@ -248,7 +248,7 @@ export default function KanbanBoard() {
             <DroppableColumn
               key={idx}
               id={item.status}
-              className="flex min-h-[28rem] flex-col rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] p-3"
+              className="flex max-h-[40rem] flex-col rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] p-3"
             >
               <div className="mb-3 flex items-center justify-between gap-2">
                 <div>
