@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Area,
   AreaChart,
@@ -115,6 +116,14 @@ export default function DashboardPage() {
   const peakVelocity = VELOCITY_DATA.reduce((peak, item) =>
     item.tasks > peak.tasks ? item : peak,
   );
+
+  const sortedDashboardTasks = useMemo(() => {
+    return [...activeTasks].sort((a, b) => {
+      if (a.status === "Done" && b.status !== "Done") return 1;
+      if (a.status !== "Done" && b.status === "Done") return -1;
+      return 0;
+    });
+  }, [activeTasks]);
 
   return (
     <div className="font-ui-db bg-[var(--db-bg-main)] text-[var(--db-text-primary)]">
@@ -294,24 +303,37 @@ export default function DashboardPage() {
             role="list"
             className="min-h-0 flex-1 space-y-1 overflow-auto pr-1"
           >
-            {activeTasks.map((t) => (
-              <TaskRow
-                key={t._id}
-                title={t.title}
-                status={t.status as TaskStatus}
-                priority={t.priority as TaskPriority}
-                onToggleTask={() => {
-                  const nextStatus =
-                    t.status === "To Do"
-                      ? "In Progress"
-                      : t.status === "In Progress"
-                        ? "Done"
-                        : "To Do";
+            <AnimatePresence initial={false}>
+              {sortedDashboardTasks.map((t) => (
+                <motion.div
+                  key={t._id}
+                  layout
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{
+                    layout: { duration: 0.25, ease: "easeOut" },
+                    opacity: { duration: 0.15 },
+                  }}
+                >
+                  <TaskRow
+                    title={t.title}
+                    status={t.status as TaskStatus}
+                    priority={t.priority as TaskPriority}
+                    onToggleTask={() => {
+                      const nextStatus =
+                        t.status === "To Do"
+                          ? "In Progress"
+                          : t.status === "In Progress"
+                            ? "Done"
+                            : "To Do";
 
-                  updateTaskStatus(t._id, nextStatus);
-                }}
-              />
-            ))}
+                      updateTaskStatus(t._id, nextStatus);
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
 
           <div className="pt-2">
