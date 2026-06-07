@@ -17,6 +17,7 @@ import {
 import { CalendarDays, Edit, GripVertical, Plus } from "lucide-react";
 import DeleteConfirmation from "../components/DeleteConfirmation";
 import { useTaskStore } from "@/store/taskStore";
+import { useTaskModal } from "@/hooks/useTaskModal";
 
 const columns: Column[] = [
   { status: "To Do", tasks: [] },
@@ -43,23 +44,11 @@ type EditTaskResponse = { success?: boolean; data: Task };
 
 type DraggableTaskProps = {
   task: Task;
-  setSelectedData: React.Dispatch<
-    React.SetStateAction<EditTaskResponse | undefined>
-  >;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setActiveStatus: React.Dispatch<React.SetStateAction<string>>;
   onTaskDelete: (taskId: string) => Promise<void>;
-  editTask: (taskId: string) => Promise<Response>;
+  onTaskEdit: (taskId: string) => Promise<void>;
 };
 
-function DraggableTask({
-  task,
-  setSelectedData,
-  setOpenModal,
-  setActiveStatus,
-  onTaskDelete,
-  editTask,
-}: DraggableTaskProps) {
+function DraggableTask({ task, onTaskDelete, onTaskEdit }: DraggableTaskProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task._id,
     data: { task },
@@ -68,14 +57,6 @@ function DraggableTask({
   const style = transform
     ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
     : undefined;
-
-  async function editHandler(taskId: string) {
-    const res = await editTask(taskId);
-    const json = await res.json();
-    setSelectedData(json);
-    setActiveStatus(json?.data?.status || "To Do");
-    setOpenModal(true);
-  }
 
   return (
     <div
@@ -112,7 +93,7 @@ function DraggableTask({
         <div className="flex shrink-0 gap-1">
           <button
             className="rounded border border-transparent p-1 text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--text-primary)]"
-            onClick={() => editHandler(task._id)}
+            onClick={() => onTaskEdit(task._id)}
             aria-label="Edit task"
           >
             <Edit className="size-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition" />
@@ -136,9 +117,14 @@ function DraggableTask({
 
 export default function KanbanBoard() {
   const [columnData, setColumnData] = useState(columns);
-  const [activeStatus, setActiveStatus] = useState("To Do");
-  const [selectedData, setSelectedData] = useState<EditTaskResponse>();
-  const [openModal, setOpenModal] = useState(false);
+  const {
+    activeStatus,
+    selectedData,
+    openModal,
+    setOpenModal,
+    openAddTask,
+    openEditTask,
+  } = useTaskModal();
 
   const { tasks, deleteTasks, fetchTasks, updateTaskStatus, editTask } =
     useTaskStore();
@@ -166,6 +152,15 @@ export default function KanbanBoard() {
       await deleteTasks(taskId);
     },
     [deleteTasks],
+  );
+
+  const editHandler = useCallback(
+    async (taskId: string) => {
+      const res = await editTask(taskId);
+      const json = (await res.json()) as EditTaskResponse;
+      openEditTask(json);
+    },
+    [editTask, openEditTask],
   );
 
   const handleDragEvent = useCallback(
@@ -270,11 +265,8 @@ export default function KanbanBoard() {
                     <DraggableTask
                       key={task._id}
                       task={task}
-                      setSelectedData={setSelectedData}
-                      setOpenModal={setOpenModal}
-                      setActiveStatus={setActiveStatus}
                       onTaskDelete={deleteHandler}
-                      editTask={editTask}
+                      onTaskEdit={editHandler}
                     />
                   ))
                 ) : (
@@ -292,14 +284,10 @@ export default function KanbanBoard() {
                   active:bg-[var(--green-active)]
                   transition
                 "
-                onClick={() => {
-                  setSelectedData(undefined);
-                  setActiveStatus(item.status);
-                  setOpenModal(true);
-                }}
+                onClick={() => openAddTask(item.status)}
               >
                 <Plus className="size-3.5" />
-                Add Task
+                Add New Task
               </button>
             </DroppableColumn>
           ))}

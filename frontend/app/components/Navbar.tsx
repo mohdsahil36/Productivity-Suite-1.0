@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-3 px-3 py-2.5 sm:px-4">
         <Link href="/dashboard" className="flex min-w-0 items-center gap-3">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-[var(--border-default)] bg-[var(--text-primary)] text-[12px] font-semibold text-[var(--bg-surface)]">
-            P
+            PS
           </span>
           <div>
             <h1 className="text-sm font-semibold leading-none tracking-[-0.01em] text-[var(--text-primary)]">
@@ -41,20 +41,20 @@ export default function Navbar() {
                 (href === "/dashboard" && pathname === "/");
 
               return (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={[
-                    "inline-flex h-8 items-center gap-2 rounded-md px-3 text-xs font-medium transition",
-                    isActive
-                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-[inset_0_0_0_1px_var(--border-default)]"
-                      : "text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]",
-                  ].join(" ")}
-                >
-                  <Icon className="size-3.5" />
-                  {label}
-                </Link>
-              </li>
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={[
+                      "inline-flex h-8 items-center gap-2 rounded-md px-3 text-xs font-medium transition",
+                      isActive
+                        ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-[inset_0_0_0_1px_var(--border-default)]"
+                        : "text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]",
+                    ].join(" ")}
+                  >
+                    <Icon className="size-3.5" />
+                    {label}
+                  </Link>
+                </li>
               );
             })}
           </ul>
