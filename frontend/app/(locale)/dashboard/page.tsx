@@ -26,6 +26,8 @@ import {
   CALENDAR_EVENT_DAYS,
 } from "./dashboardData";
 import { Button } from "@/components/ui/button";
+import AddTask from "@/app/components/AddTask";
+import { useTaskModal } from "@/hooks/useTaskModal";
 
 const RECHARTS_TOOLTIP_STYLE: React.CSSProperties = {
   background: "var(--db-bg-surface)",
@@ -70,6 +72,8 @@ export default function DashboardPage() {
   const rawTasks = useTaskStore((s) => s.tasks);
   const fetchTasks = useTaskStore((s) => s.fetchTasks);
   const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
+  const { activeStatus, selectedData, openModal, setOpenModal, openAddTask } =
+    useTaskModal();
 
   useEffect(() => {
     setIsMounted(true);
@@ -184,13 +188,7 @@ export default function DashboardPage() {
                     margin={{ top: 4, right: 4, left: 10, bottom: 0 }}
                   >
                     <defs>
-                      <linearGradient
-                        id="vel-grad"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
+                      <linearGradient id="vel-grad" x1="0" y1="0" x2="0" y2="1">
                         <stop
                           offset="0%"
                           stopColor="var(--db-green-primary)"
@@ -317,7 +315,10 @@ export default function DashboardPage() {
           </div>
 
           <div className="pt-2">
-            <Button className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2 text-xs font-semibold tracking-[0.01em] transition-all duration-150">
+            <Button
+              className="block w-full text-center bg-[var(--db-green-primary)] hover:bg-[var(--db-green-hover)] active:scale-[0.99] text-white dark:text-black rounded-md py-2 text-xs font-semibold tracking-[0.01em] transition-all duration-150"
+              onClick={() => openAddTask("To Do")}
+            >
               Add New Task
             </Button>
           </div>
@@ -502,6 +503,12 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+      <AddTask
+        status={activeStatus}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        selectedData={selectedData}
+      />
     </div>
   );
 }
